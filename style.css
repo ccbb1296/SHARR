@@ -349,8 +349,11 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border: 0; bo
 .with-char > .section { padding-right: calc(var(--char-w) + 24px); }
 
 /* 태블릿·휴대폰에서는 본문을 가리니까 숨김 */
+/* 태블릿·휴대폰: 캐릭터를 작게 줄여서 오른쪽 구석으로 따라오게 */
 @media (max-width: 900px) {
-  .char-rail { display: none; }
+  :root { --char-w: 120px; }
+  .char-rail { right: 0; }
+  .char-card { opacity: .95; }
   .with-char > .section { padding-right: var(--pad); }
 }
 @media (max-width: 760px) {
@@ -382,10 +385,16 @@ body:not(.locked) .yt-mini { opacity: 1; transform: none; }  /* 인트로 끝나
 .yt-info strong { font-size: 18px; font-weight: 900; }
 .yt-info span { color: var(--muted); font-size: 13px; }
 
-/* 휴대폰: 정보 글씨는 숨기고 플레이어만 */
+/* 휴대폰: 플레이어를 떠다니게 두지 않고 맨 위(첫 화면)에 고정
+   → 스크롤을 내리면 같이 위로 올라가서 본문을 가리지 않아요 */
 @media (max-width: 760px) {
-  .yt-mini { left: 12px; bottom: 12px; padding: 8px; }
-  .yt-info { display: none; }
+  .yt-mini {
+    position: absolute;
+    top: calc(72px + env(safe-area-inset-top, 0px));
+    left: 16px; right: 16px; bottom: auto;
+    padding: 10px;
+  }
+  body .hero { padding-top: calc(330px + env(safe-area-inset-top, 0px)); } /* 플레이어 아래부터 내용 시작 */
 }
 
 /* ================= TOAST ================= */
