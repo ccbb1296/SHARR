@@ -179,6 +179,26 @@ window.addEventListener("resize", onCharScroll);
 window.addEventListener("load", moveChar);
 moveChar();
 
+/* ---------------- 캐릭터 클릭하면 바꾸기 ---------------- */
+const CHAR_IMAGES = ["assets/character.webp", "assets/character2.webp"]; // 순서대로 번갈아 바뀜
+const charImg = $("#charImg");
+let charIndex = 0;
+
+// 두 번째 사진을 미리 불러와서 클릭할 때 바로 바뀌게
+CHAR_IMAGES.slice(1).forEach((src) => { new Image().src = src; });
+
+$("#charSwap").addEventListener("click", () => {
+  charCard.classList.add("swapping");
+  setTimeout(() => {
+    charIndex = (charIndex + 1) % CHAR_IMAGES.length;
+    charImg.onload = () => {
+      charCard.classList.remove("swapping");
+      moveChar(); // 사진 높이가 다르면 위치 다시 계산
+    };
+    charImg.src = CHAR_IMAGES[charIndex];
+  }, 220);
+});
+
 /* ---------------- 모바일 메뉴 ---------------- */
 const burger = $("#burger");
 const navLinks = $("#navLinks");

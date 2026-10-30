@@ -333,9 +333,18 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border: 0; bo
 .char-card {
   position: absolute;            /* 위치는 script.js 가 스크롤에 맞춰 계산 */
   top: 0; left: 0; right: 0;
+  display: block; width: 100%;
+  padding: 0; border: 0; background: none;
+  pointer-events: auto;          /* 캐릭터만 클릭 가능 */
+  cursor: pointer;
   will-change: transform;
   animation: charFloat 4s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
 }
+.char-card:focus-visible { outline: 2px solid var(--pink); outline-offset: 6px; border-radius: 16px; }
+.char-card img { transition: opacity .22s ease, scale .22s ease; }
+.char-card:hover img { scale: 1.02; }
+.char-card.swapping img { opacity: 0; scale: .96; }   /* 바뀔 때 살짝 사라졌다 나타남 */
 /* 테두리 없이 이미지만. 가장자리는 부드럽게 흐려져서 네모 티가 덜 나요.
    (투명 배경 PNG를 쓰면 아래 mask 두 줄은 지워도 돼요) */
 .char-card img {
@@ -348,12 +357,9 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border: 0; bo
 /* 본문이 캐릭터에 가려지지 않게 오른쪽 여백 확보 */
 .with-char > .section { padding-right: calc(var(--char-w) + 24px); }
 
-/* 태블릿·휴대폰에서는 본문을 가리니까 숨김 */
-/* 태블릿·휴대폰: 캐릭터를 작게 줄여서 오른쪽 구석으로 따라오게 */
+/* 태블릿·휴대폰에서는 본문을 가리니까 캐릭터 숨김 */
 @media (max-width: 900px) {
-  :root { --char-w: 120px; }
-  .char-rail { right: 0; }
-  .char-card { opacity: .95; }
+  .char-rail { display: none; }
   .with-char > .section { padding-right: var(--pad); }
 }
 @media (max-width: 760px) {

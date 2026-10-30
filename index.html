@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body class="locked">
 
@@ -122,10 +122,11 @@
          띠 아래부터 맨 끝 선(푸터)까지 오른쪽에서 스크롤을 따라 내려가요.
          사진을 바꾸려면 assets/character.webp 파일만 교체하거나 src를 바꾸세요. -->
     <div class="with-char">
-    <aside class="char-rail" aria-hidden="true">
-      <div class="char-card">
-        <img src="assets/character.webp" alt="" />
-      </div>
+    <!-- 캐릭터를 클릭하면 character.webp ↔ character2.webp 로 바뀌어요 -->
+    <aside class="char-rail">
+      <button class="char-card" id="charSwap" type="button" aria-label="캐릭터 바꾸기" title="클릭하면 캐릭터가 바뀌어요">
+        <img id="charImg" src="assets/character.webp" alt="" />
+      </button>
     </aside>
 
     <!-- ============ 01 ABOUT ============ -->
@@ -355,6 +356,6 @@
 
   <div id="toast" class="toast"></div>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
