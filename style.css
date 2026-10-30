@@ -345,6 +345,27 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border: 0; bo
 .char-card img { transition: opacity .22s ease, scale .22s ease; }
 .char-card:hover img { scale: 1.02; }
 .char-card.swapping img { opacity: 0; scale: .96; }   /* 바뀔 때 살짝 사라졌다 나타남 */
+
+/* 클릭 포인트 (캐릭터 아래 핑크 배지) */
+.char-hint {
+  position: absolute; left: 50%; bottom: 9%;
+  translate: -50% 0;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  background: var(--pink); color: #fff;
+  font-size: 12px; font-weight: 700; white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(255, 61, 127, 0.5);
+  animation: hintPulse 1.6s ease-in-out infinite;
+  transition: background .2s, color .2s;
+}
+.char-hint b { font-weight: 700; opacity: .8; }
+.char-hint-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: blink 1s infinite; }
+.char-card:hover .char-hint { background: #fff; color: var(--pink); }
+.char-card:hover .char-hint-dot { background: var(--pink); }
+@keyframes hintPulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(255,61,127,.5), 0 0 0 0 rgba(255,61,127,.55); }
+  50%      { box-shadow: 0 8px 24px rgba(255,61,127,.5), 0 0 0 12px rgba(255,61,127,0); }
+}
 /* 테두리 없이 이미지만. 가장자리는 부드럽게 흐려져서 네모 티가 덜 나요.
    (투명 배경 PNG를 쓰면 아래 mask 두 줄은 지워도 돼요) */
 .char-card img {

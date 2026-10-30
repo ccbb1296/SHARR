@@ -113,6 +113,8 @@ function enterSite() {
     intro.classList.add("hide");
     document.body.classList.remove("locked");
     revealHero();
+    // 사라지는 효과가 끝나면 인트로를 완전히 치워서 클릭을 막지 않게
+    setTimeout(() => { intro.style.display = "none"; }, 1000);
   }, lights.length * 350 + 650);
 }
 
@@ -196,6 +198,7 @@ $("#charSwap").addEventListener("click", () => {
       moveChar(); // 사진 높이가 다르면 위치 다시 계산
     };
     charImg.src = CHAR_IMAGES[charIndex];
+    $("#charCount").textContent = `${charIndex + 1} / ${CHAR_IMAGES.length}`;
   }, 220);
 });
 
