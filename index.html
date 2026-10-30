@@ -16,10 +16,17 @@
 </head>
 <body class="locked">
 
-  <!-- ============ BGM ============
-       assets 폴더에 음악 파일을 넣고 src만 바꿔주세요. (예: assets/bgm.mp3)
-       곡 제목은 script.js 맨 위 CONFIG에서 바꿀 수 있어요. -->
-  <audio id="bgm" src="assets/bgm.mp3" loop preload="auto"></audio>
+  <!-- ============ BGM (유튜브 미니 플레이어) ============
+       곡을 바꾸려면 script.js 맨 위 CONFIG 의 youtubeId / songTitle / songArtist 만 바꾸세요.
+       유튜브 규칙상 플레이어 화면은 숨기지 않고 보이게 둬야 해요. -->
+  <div class="yt-mini" id="ytMini">
+    <div class="yt-frame"><div id="ytPlayer"></div></div>
+    <div class="yt-info">
+      <p class="mono"><span class="yt-dot"></span>NOW PLAYING</p>
+      <strong id="ytTitle">Cry Baby</strong>
+      <span id="ytArtist">Official髭男dism</span>
+    </div>
+  </div>
 
   <!-- ============ INTRO (출발 신호) ============ -->
   <div id="intro" class="intro">
@@ -110,6 +117,16 @@
         <span>종랜 ✦ 이벤트 ✦ 하드코어 ✦ 서바이벌 ✦ 이어달리기 ✦ 점령전 ✦ 비공정 ✦ DISCORD ✦ 길드원 최우선 ✦&nbsp;</span>
       </div>
     </div>
+
+    <!-- ============ 따라오는 캐릭터 ============
+         띠 아래부터 맨 끝 선(푸터)까지 오른쪽에서 스크롤을 따라 내려가요.
+         사진을 바꾸려면 assets/character.webp 파일만 교체하거나 src를 바꾸세요. -->
+    <div class="with-char">
+    <aside class="char-rail" aria-hidden="true">
+      <div class="char-card">
+        <img src="assets/character.webp" alt="" />
+      </div>
+    </aside>
 
     <!-- ============ 01 ABOUT ============ -->
     <section id="about" class="section">
@@ -267,13 +284,13 @@
       <div class="steps">
         <div class="step reveal">
           <p class="mono">LAP 01</p>
-          <h4>길드원 찬성</h4>
-          <p>길드원 <b>60% 이상</b>의 찬성 ★x99</p>
+          <h4>양식 보내기</h4>
+          <p>아래 가입 양식을 작성해서 《 캔슬녀 》 또는 《 밝게 》에게 보내기</p>
         </div>
         <div class="step reveal">
           <p class="mono">LAP 02</p>
           <h4>마스터 승인</h4>
-          <p>길드마스터 · 서브마스터의 찬성</p>
+          <p>길드마스터 · 서브마스터 확인 후 승인</p>
         </div>
         <div class="step finish reveal">
           <p class="mono">FINISH</p>
@@ -327,6 +344,7 @@
 
       <p class="thanks reveal">감사합니다 ♥</p>
     </section>
+    </div><!-- /with-char -->
   </main>
 
   <footer class="footer">

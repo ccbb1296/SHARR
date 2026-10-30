@@ -4,14 +4,16 @@
 
 // ---- 여기만 수정하면 돼요 ----
 const CONFIG = {
-  defaultVolume: 35,     // 처음 볼륨 (0~100)
-  autoPlayOnEnter: false, // 인트로에서 입장할 때 음악 자동 재생 (true로 바꾸면 켜짐)
+  youtubeId: "O1bhZgkC4Gw",      // BGM 유튜브 영상 ID (youtu.be/여기부분)
+  songTitle: "Cry Baby",          // 미니 플레이어에 보일 곡 제목
+  songArtist: "Official髭男dism", // 가수
+  defaultVolume: 35,              // 처음 볼륨 (0~100)
+  autoPlayOnEnter: false,         // 인트로에서 입장할 때 음악 자동 재생 (true로 바꾸면 켜짐)
 };
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
-const bgm = $("#bgm");
 const intro = $("#intro");
 const bgmToggle = $("#bgmToggle");
 const volume = $("#volume");
@@ -28,8 +30,13 @@ function showToast(msg) {
   toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
 }
 
-/* ---------------- BGM ---------------- */
-bgm.volume = CONFIG.defaultVolume / 100;
+/* ---------------- BGM (유튜브 연결 재생) ---------------- */
+let yt = null;          // 유튜브 플레이어
+let ytReady = false;
+let playWanted = false; // 준비 전에 재생 버튼을 누른 경우 기억
+
+$("#ytTitle").textContent = CONFIG.songTitle;
+$("#ytArtist").textContent = CONFIG.songArtist;
 volume.value = CONFIG.defaultVolume;
 volLabel.textContent = CONFIG.defaultVolume + "%";
 
@@ -37,31 +44,57 @@ function setPlayingUI(on) {
   bgmToggle.textContent = on ? "BGM ON" : "BGM OFF";
   bgmToggle.classList.toggle("on", on);
   eq.classList.toggle("play", on);
+  $("#ytMini").classList.toggle("playing", on);
 }
 
-async function playBgm() {
-  try {
-    await bgm.play();
-    setPlayingUI(true);
-  } catch (e) {
-    // 음악 파일이 없거나 브라우저가 막은 경우
-    setPlayingUI(false);
-    if (bgm.error) showToast("assets 폴더에 음악 파일을 넣어주세요 ♪");
-  }
+// 유튜브 IFrame API 불러오기
+const ytScript = document.createElement("script");
+ytScript.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(ytScript);
+
+window.onYouTubeIframeAPIReady = () => {
+  yt = new YT.Player("ytPlayer", {
+    width: "100%",
+    height: "100%",
+    videoId: CONFIG.youtubeId,
+    playerVars: {
+      playlist: CONFIG.youtubeId, // 반복 재생용
+      loop: 1,
+      controls: 1,
+      playsinline: 1,
+      rel: 0,
+    },
+    events: {
+      onReady: () => {
+        ytReady = true;
+        yt.setVolume(CONFIG.defaultVolume);
+        if (playWanted) yt.playVideo();
+      },
+      onStateChange: (e) => setPlayingUI(e.data === YT.PlayerState.PLAYING),
+      onError: () => showToast("이 영상은 사이트에서 재생할 수 없어요. script.js 의 youtubeId를 바꿔주세요."),
+    },
+  });
+};
+
+function playBgm() {
+  playWanted = true;
+  if (ytReady) yt.playVideo();
 }
 
 function pauseBgm() {
-  bgm.pause();
-  setPlayingUI(false);
+  playWanted = false;
+  if (ytReady) yt.pauseVideo();
 }
 
-bgmToggle.addEventListener("click", () => (bgm.paused ? playBgm() : pauseBgm()));
-
-volume.addEventListener("input", () => {
-  bgm.volume = volume.value / 100;
-  volLabel.textContent = volume.value + "%";
+bgmToggle.addEventListener("click", () => {
+  const playing = ytReady && yt.getPlayerState() === YT.PlayerState.PLAYING;
+  playing ? pauseBgm() : playBgm();
 });
 
+volume.addEventListener("input", () => {
+  if (ytReady) yt.setVolume(Number(volume.value));
+  volLabel.textContent = volume.value + "%";
+});
 /* ---------------- 인트로 (출발 신호 3 → GO) ---------------- */
 let entered = false;
 
@@ -117,6 +150,34 @@ const io = new IntersectionObserver(
   { threshold: 0.15 }
 );
 $$(".reveal").forEach((el) => io.observe(el));
+
+/* ---------------- 따라오는 캐릭터 ----------------
+   띠 아래(레일 시작)에서 출발해서, 페이지 맨 아래에 도착하면
+   캐릭터 아랫면이 푸터 선에 딱 닿도록 스크롤 비율로 위치를 계산해요. */
+const rail = $(".char-rail");
+const charCard = $(".char-card");
+const NAV_GAP = 96; // 메뉴바 아래 여백(px)
+
+function moveChar() {
+  if (!rail || rail.offsetParent === null) return; // 숨겨진 화면(모바일)에서는 계산 안 함
+  const railTop = rail.getBoundingClientRect().top + window.scrollY;
+  const room = rail.offsetHeight - charCard.offsetHeight; // 움직일 수 있는 거리
+  const start = railTop - NAV_GAP;                        // 레일이 메뉴바 아래에 닿는 스크롤 위치
+  const end = document.documentElement.scrollHeight - window.innerHeight; // 맨 아래
+  const p = Math.min(1, Math.max(0, (window.scrollY - start) / Math.max(1, end - start)));
+  charCard.style.transform = `translateY(${Math.max(0, room) * p}px)`;
+}
+
+let charTicking = false;
+function onCharScroll() {
+  if (charTicking) return;
+  charTicking = true;
+  requestAnimationFrame(() => { moveChar(); charTicking = false; });
+}
+window.addEventListener("scroll", onCharScroll, { passive: true });
+window.addEventListener("resize", onCharScroll);
+window.addEventListener("load", moveChar);
+moveChar();
 
 /* ---------------- 모바일 메뉴 ---------------- */
 const burger = $("#burger");
