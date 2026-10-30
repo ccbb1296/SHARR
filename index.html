@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[쌰르] SHARR // 1기 길드원 모집</title>
+  <meta name="description" content="테일즈런너 종랜 친목 길드 Lv.14 [쌰르] 1기 길드원 모집" />
+
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="locked">
+
+  <!-- ============ BGM ============
+       assets 폴더에 음악 파일을 넣고 src만 바꿔주세요. (예: assets/bgm.mp3)
+       곡 제목은 script.js 맨 위 CONFIG에서 바꿀 수 있어요. -->
+  <audio id="bgm" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+  <!-- ============ INTRO (출발 신호) ============ -->
+  <div id="intro" class="intro">
+    <div class="intro-grid"></div>
+    <p class="intro-top mono">TALESRUNNER // GUILD RECRUIT // LV.14</p>
+
+    <div class="lights" aria-hidden="true">
+      <span class="light"></span>
+      <span class="light"></span>
+      <span class="light"></span>
+    </div>
+
+    <h1 class="intro-logo">
+      <span class="glitch" data-text="SHARR">SHARR</span>
+    </h1>
+    <p class="intro-sub">[쌰르] 1기 길드원 모집</p>
+
+    <button id="startBtn" class="start-btn">
+      <span class="dot"></span> CLICK OR PRESS ENTER
+    </button>
+
+    <div class="intro-bottom mono">
+      <span>READY · SET · RUN</span>
+      <span>BGM ON ENTER ♪</span>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav-logo">SHA<span>RR</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">ABOUT</a>
+      <a href="#play">PLAY</a>
+      <a href="#rules">RULES</a>
+      <a href="#join">JOIN</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+
+    <div class="player">
+      <div class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <button id="bgmToggle" class="bgm-btn mono">BGM OFF</button>
+      <input id="volume" type="range" min="0" max="100" value="35" aria-label="볼륨" />
+      <span id="volLabel" class="mono vol-label">35%</span>
+    </div>
+
+    <button class="burger" id="burger" aria-label="메뉴 열기"><span></span><span></span></button>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-bg-text" aria-hidden="true">쌰르</div>
+
+      <div class="hero-inner">
+        <p class="eyebrow mono"><span class="live"></span> 1ST MEMBER RECRUIT · OPEN NOW</p>
+        <h2 class="hero-title">
+          같이 달리고,<br />
+          <em>같이 웃을 사람.</em>
+        </h2>
+        <p class="hero-desc">
+          종랜 친목 길드 <b>Lv.14 [쌰르]</b>에서 1기 길드원을 모집합니다.<br />
+          종랜만을 위한 길드가 아니니 부담 갖지 말고 편하게 들어오세요.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#about" class="btn ghost">GUILD CHECK ↓</a>
+          <a href="#join" class="btn solid">가입 양식 보기 →</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <p class="mono small">GUILD STATUS</p>
+        <div class="stat-row"><span>LEVEL</span><b>14</b></div>
+        <div class="stat-row"><span>SKILL</span><b>14 / 14 / 0</b></div>
+        <div class="stat-row"><span>TYPE</span><b>종랜 친목</b></div>
+        <div class="stat-row"><span>RECRUIT</span><b class="accent">1기 OPEN</b></div>
+      </aside>
+
+      <a href="#about" class="scroll-hint mono">SCROLL ↓</a>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>종랜 ✦ 이벤트 ✦ 하드코어 ✦ 서바이벌 ✦ 이어달리기 ✦ 점령전 ✦ 비공정 ✦ DISCORD ✦ 길드원 최우선 ✦&nbsp;</span>
+        <span>종랜 ✦ 이벤트 ✦ 하드코어 ✦ 서바이벌 ✦ 이어달리기 ✦ 점령전 ✦ 비공정 ✦ DISCORD ✦ 길드원 최우선 ✦&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ============ 01 ABOUT ============ -->
+    <section id="about" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-num">01</span>
+        <div>
+          <p class="mono sec-en">ABOUT GUILD</p>
+          <h3>길드 소개</h3>
+        </div>
+      </div>
+
+      <p class="lead reveal">
+        안녕하세요, 길드마스터입니다.<br />
+        저희 [쌰르]의 큰 틀은 <b>종랜 친목 길드</b>가 맞지만,
+        이벤트 · 하드코어 · 서바이벌 · 이어달리기 등 <b>여러 콘텐츠를 함께</b> 즐기고 있어요.
+      </p>
+
+      <div class="cards three">
+        <article class="card reveal">
+          <span class="card-icon">◎</span>
+          <h4>종랜 친목 베이스</h4>
+          <p>길드의 중심은 종랜. 같이 뛰면서 자연스럽게 친해지는 길드예요.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card-icon">✦</span>
+          <h4>다양한 콘텐츠</h4>
+          <p>이벤트, 하드코어, 서바이벌, 이어달리기까지 원하는 걸 같이 달려요.</p>
+        </article>
+        <article class="card reveal highlight">
+          <span class="card-icon">♥</span>
+          <h4>길드원 최우선</h4>
+          <p>저희 길드는 <b>길드원을 제일 우선시</b>합니다.</p>
+        </article>
+      </div>
+
+      <!-- 길드 스킬 -->
+      <div class="skill-box reveal">
+        <div class="skill-head">
+          <p class="mono">GUILD SKILL</p>
+          <h4>길드스킬 14 / 14 / 0</h4>
+          <p class="muted">현재 종랜 플레이에 고정으로 맞춰져 있어요.</p>
+        </div>
+        <div class="skill-bars">
+          <div class="bar"><span>SKILL 1</span><div class="track"><i style="--w:100%"></i></div><b>14</b></div>
+          <div class="bar"><span>SKILL 2</span><div class="track"><i style="--w:100%"></i></div><b>14</b></div>
+          <div class="bar"><span>SKILL 3</span><div class="track"><i style="--w:0%"></i></div><b>0</b></div>
+        </div>
+        <p class="note">
+          ▶ 이벤트 기간에는 그에 맞는 길드스킬이 찍힌 길드를 알려드려요.
+          필요한 분은 그쪽으로 가입해서 길스를 받으시면 됩니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 02 PLAY ============ -->
+    <section id="play" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-num">02</span>
+        <div>
+          <p class="mono sec-en">HOW WE PLAY</p>
+          <h3>길드 활동 안내</h3>
+        </div>
+      </div>
+
+      <div class="cards two">
+        <article class="card reveal">
+          <p class="mono tag">DISCORD · REQUIRED</p>
+          <h4>디스코드 입장 필수</h4>
+          <p>저희는 <b>"친목"</b> 길드라서 디스코드 입장을 필수로 받고 있어요.
+            적응기간 <b>2주</b> 동안은 마이크를 필수로 두지 않아요.</p>
+          <p class="warn">▶ 마이크를 아예 사용하지 않는 분은 가입이 어려울 수 있어요.</p>
+        </article>
+
+        <article class="card reveal">
+          <p class="mono tag">GUILD QUEST · 3 WEEKS</p>
+          <h4>신입 적응기간 길드퀘스트</h4>
+          <p>신입 길드원 적응을 위해 약 <b>3주간 1인 길드퀘스트 주 2회</b>는 필수예요.
+            그 이후에는 원하는 사람끼리 즐기면 돼요.</p>
+          <p class="warn">▶ 신입이 들어올 때마다 기존 멤버들도 모두 함께 참여해요.</p>
+        </article>
+
+        <article class="card reveal">
+          <p class="mono tag">AIRSHIP</p>
+          <h4>비공정</h4>
+          <p>길드원들과 시간을 맞춘 뒤 진행해요.
+            비공정을 위해 길드퀘스트와 점령전도 활발하게 참여해 주시면 감사하겠습니다.</p>
+        </article>
+
+        <article class="card reveal">
+          <p class="mono tag">OCCUPATION · FOR FUN</p>
+          <h4>점령전은 언제나 즐겜</h4>
+          <p>점령전은 항상 즐겜으로 진행하니 부담 갖지 않으셔도 돼요.</p>
+          <p class="warn">▶ 가게 될 존은 항상 길드원과 상의한 뒤 정해요.</p>
+        </article>
+      </div>
+
+      <div class="free-box reveal">
+        <div>
+          <p class="mono tag">FREE PLAY</p>
+          <h4>랜덤길드전 · 44 · 점령전 등은 원하는 사람끼리!</h4>
+        </div>
+        <p>단, <b>길드퀘스트만 양보</b>해 주세요. 빠르게 친해지기 위한 거니까 협조 부탁드려요 🙏</p>
+      </div>
+    </section>
+
+    <!-- ============ 03 RULES ============ -->
+    <section id="rules" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-num">03</span>
+        <div>
+          <p class="mono sec-en">CONDITIONS</p>
+          <h3>가입 · 추방 조건</h3>
+        </div>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-panel reveal">
+          <p class="mono panel-label ok">● JOIN CONDITION</p>
+          <h4>가입조건</h4>
+          <ol class="rule-list">
+            <li><span>01</span><p>2026년 기준 <b>20~32세</b> 여성 또는 남성</p></li>
+            <li><span>02</span><p>부계 방지를 위해 <b>홀리윙 上</b>부터 가입 가능</p></li>
+            <li><span>03</span><p>길드에서 <b>활발하게 활동</b>할 수 있는 분</p></li>
+          </ol>
+          <div class="no-tags">
+            <p class="mono small">REJECT</p>
+            <span>노고인</span><span>팜인</span><span>n미새</span><span>철새</span><span>부계</span>
+          </div>
+          <p class="note">→ 테스트는 없지만 종랜만 즐기고 싶다면 말씀해 주세요. 준비하겠습니다.</p>
+        </div>
+
+        <div class="rule-panel danger reveal">
+          <p class="mono panel-label bad">● KICK CONDITION</p>
+          <h4>추방조건</h4>
+          <ol class="rule-list">
+            <li><span>01</span><p>길드 활동이 <b>전혀 없는</b> 분</p></li>
+            <li><span>02</span><p>장기 미접속 <small>(일주일에 2번은 접속해 주셔야 해요)</small></p></li>
+            <li><span>03</span><p>심한 언행이나 욕설로 피해를 주는 분</p></li>
+          </ol>
+          <p class="note">→ 추방 사유는 따로 안내한 뒤 추방합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 JOIN ============ -->
+    <section id="join" class="section">
+      <div class="sec-head reveal">
+        <span class="sec-num">04</span>
+        <div>
+          <p class="mono sec-en">JOIN ROUTE</p>
+          <h3>가입 과정</h3>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <p class="mono">LAP 01</p>
+          <h4>길드원 찬성</h4>
+          <p>길드원 <b>60% 이상</b>의 찬성 ★x99</p>
+        </div>
+        <div class="step reveal">
+          <p class="mono">LAP 02</p>
+          <h4>마스터 승인</h4>
+          <p>길드마스터 · 서브마스터의 찬성</p>
+        </div>
+        <div class="step finish reveal">
+          <p class="mono">FINISH</p>
+          <h4>가입 완료 ☆</h4>
+          <p>길드 디스코드 서버 입장</p>
+        </div>
+      </div>
+
+      <div class="trainee reveal">
+        <span class="badge mono">TRAINEE</span>
+        <p>복귀 유저 · 뉴비 유저를 위한 <b>견습길드원 제도</b>도 운영 중이에요.
+          견습길드원은 <b>쏠라윙 上</b> 분들을 위한 자리로 남겨두고 있어요.</p>
+      </div>
+
+      <!-- 가입 양식 -->
+      <div class="form-box reveal">
+        <div class="form-head">
+          <div>
+            <p class="mono">APPLY FORM</p>
+            <h4>가입을 위해 보내는 양식</h4>
+          </div>
+          <button class="btn solid" id="copyForm">양식 복사하기 ⧉</button>
+        </div>
+        <pre id="formText" class="form-text">닉네임 :
+전 길드 탈퇴 사유 :
+나이 :
+성별 :
+전 닉네임 :</pre>
+        <p class="note">→ 전 닉네임은 과거에 피해를 줄 만한 행동이 없었는지 확인하기 위한 항목이에요. 예방 차원이니 꼭 협조 부탁드려요.</p>
+      </div>
+    </section>
+
+    <!-- ============ 05 CONTACT ============ -->
+    <section id="contact" class="section contact">
+      <p class="mono eyebrow">05 · CONTACT // FINAL LAP</p>
+      <h3 class="contact-title reveal">궁금한 점이나<br /><em>가입 문의</em>는 여기로.</h3>
+      <p class="muted reveal">아래 닉네임을 누르면 복사돼요. 게임 내 쪽지로 편하게 보내 주세요.</p>
+
+      <div class="contact-cards">
+        <button class="contact-card reveal" data-copy="캔슬녀">
+          <p class="mono">MASTER CONTACT</p>
+          <strong>《 캔슬녀 》</strong>
+          <span>닉네임 복사 ⧉</span>
+        </button>
+        <button class="contact-card reveal" data-copy="밝게">
+          <p class="mono">CONTACT</p>
+          <strong>《 밝게 》</strong>
+          <span>닉네임 복사 ⧉</span>
+        </button>
+      </div>
+
+      <p class="thanks reveal">감사합니다 ♥</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="nav-logo">SHA<span>RR</span></span>
+    <p class="mono">TALESRUNNER · 종랜 친목 길드 · LV.14</p>
+    <p class="mono muted">RUN TOGETHER, STAY TOGETHER.</p>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
